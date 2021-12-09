@@ -17,16 +17,14 @@ function addDogsToDOM(obj){
     const dogBar = document.getElementById('dog-bar');
     if (filterBtn.innerText === 'Filter good dogs: ON') {
         console.log(obj)
-        let i = 0;
-        const goodDogObj = {};
+        const goodDogArr = [];
         for (const key in obj){
             if (obj[key].isGoodDog === true){
-                goodDogObj.i = obj[key]
-                console.log(i)
-                let i = i + 1 
-            }
+                goodDogArr.push(obj[key])
+            } 
         }
-        console.log(goodDogObj)
+        console.log(goodDogArr)
+        addToDOM(goodDogArr)
     }
     else {
         addToDOM(obj);
@@ -34,6 +32,8 @@ function addDogsToDOM(obj){
 
     function addToDOM(obj){
         dogBar.innerText = ""
+        console.log(obj)
+        console.log(typeof obj)
         for (const key in obj) {
 
             // grab from obj
@@ -81,15 +81,21 @@ function displayDoggo(obj){
     btn.addEventListener('click', (e) => {
         obj.isGoodDog = !obj.isGoodDog
         patch(obj);
+        
         if (obj.isGoodDog) {
             btn.innerText = 'Good Dog!'
+            fetchDogs();
         }
         else {
             btn.innerText = 'Bad Dog!'
+            fetchDogs();
         }
         const span = document.getElementById(`${obj.id}`)
         span.setAttribute('class', `${obj.isGoodDog}`)
+        
+        
     })
+    
     div.append(img, h2, btn)
     dogInfo.appendChild(div)
 }
